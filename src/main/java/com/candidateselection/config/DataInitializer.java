@@ -62,7 +62,7 @@ public class DataInitializer implements CommandLineRunner {
         // Candidates
         Candidate c1 = new Candidate();
         c1.setFullName("Amit Kumar");
-        c1.setPhotoPath("/assets/img/placeholder.jpg");
+        c1.setPhotoPath("/assets/img/placeholder.svg");
         c1.setExpertise("coding");
         c1.setLatestQualification("M.Tech (Computer Science)");
         c1.setLastCompany("TechNova Pvt Ltd");
@@ -79,7 +79,7 @@ public class DataInitializer implements CommandLineRunner {
 
         Candidate c2 = new Candidate();
         c2.setFullName("Sneha Gupta");
-        c2.setPhotoPath("/assets/img/placeholder.jpg");
+        c2.setPhotoPath("/assets/img/placeholder.svg");
         c2.setExpertise("project_management");
         c2.setLatestQualification("MBA (IT Management)");
         c2.setLastCompany("InnoSystems Inc.");
