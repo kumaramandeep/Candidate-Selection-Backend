@@ -27,29 +27,39 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Initializing data...");
 
-        // Users
+        // Admin
         User admin = new User();
         admin.setUsername("admin");
-        admin.setPassword(passwordEncoder.encode("admin123"));
+        admin.setPassword(passwordEncoder.encode("aman"));
         admin.setRole("admin");
-        admin.setFullName("Ranjit Singh (HR Manager)");
+        admin.setFullName("Aman");
         userRepository.save(admin);
 
+        // Member 1
         User member1 = new User();
         member1.setUsername("member1");
-        member1.setPassword(passwordEncoder.encode("member123"));
+        member1.setPassword(passwordEncoder.encode("deepak"));
         member1.setRole("member");
-        member1.setFullName("Aman Kumar (Board Member)");
+        member1.setFullName("Deepak Sharma");
         userRepository.save(member1);
 
+        // Member 2
         User member2 = new User();
         member2.setUsername("member2");
-        member2.setPassword(passwordEncoder.encode("member223"));
+        member2.setPassword(passwordEncoder.encode("ranjit"));
         member2.setRole("member");
-        member2.setFullName("Priya Sharma (Board Member)");
+        member2.setFullName("Ranjit Singh");
         userRepository.save(member2);
 
-        // Candidates (simplified - no nested collections)
+        // Member 3
+        User member3 = new User();
+        member3.setUsername("member3");
+        member3.setPassword(passwordEncoder.encode("rahul"));
+        member3.setRole("member");
+        member3.setFullName("Rahul Uttam");
+        userRepository.save(member3);
+
+        // Candidates
         Candidate c1 = new Candidate();
         c1.setFullName("Amit Kumar");
         c1.setPhotoPath("/assets/img/placeholder.jpg");
