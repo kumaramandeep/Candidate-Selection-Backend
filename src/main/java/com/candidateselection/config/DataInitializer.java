@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-
 @Configuration
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
@@ -51,7 +49,7 @@ public class DataInitializer implements CommandLineRunner {
         member2.setFullName("Priya Sharma (Board Member)");
         userRepository.save(member2);
 
-        // Candidates
+        // Candidates (simplified - no nested collections)
         Candidate c1 = new Candidate();
         c1.setFullName("Amit Kumar");
         c1.setPhotoPath("/assets/img/placeholder.jpg");
@@ -67,37 +65,24 @@ public class DataInitializer implements CommandLineRunner {
         c1.setDob("1990-05-15");
         c1.setGender("Male");
         c1.setMaritalStatus("Single");
-
-        // Qualifications
-        Candidate.Qualification cq1 = new Candidate.Qualification();
-        cq1.setDegree("M.Tech");
-        cq1.setInstitution("IIT Delhi");
-        cq1.setYear("2014");
-        cq1.setGrade("9.2 CGPA");
-
-        c1.setQualifications(new ArrayList<>());
-        c1.getQualifications().add(cq1);
-
-        // Experiences
-        Candidate.Experience ce1 = new Candidate.Experience();
-        ce1.setCompany("TechNova Pvt Ltd");
-        ce1.setDesignation("Senior Developer");
-        ce1.setDuration("2018-Present");
-        ce1.setRole("Leading frontend team");
-
-        c1.setExperiences(new ArrayList<>());
-        c1.getExperiences().add(ce1);
-
-        // Certifications
-        Candidate.Certification cc1 = new Candidate.Certification();
-        cc1.setName("AWS Certified Developer");
-        cc1.setIssuer("Amazon");
-        cc1.setYear("2021");
-
-        c1.setCertifications(new ArrayList<>());
-        c1.getCertifications().add(cc1);
-
         candidateRepository.save(c1);
+
+        Candidate c2 = new Candidate();
+        c2.setFullName("Sneha Gupta");
+        c2.setPhotoPath("/assets/img/placeholder.jpg");
+        c2.setExpertise("project_management");
+        c2.setLatestQualification("MBA (IT Management)");
+        c2.setLastCompany("InnoSystems Inc.");
+        c2.setTotalExperienceYears(10);
+        c2.setPhone("+91-90000-00002");
+        c2.setEmail("sneha.gupta@example.com");
+        c2.setNationality("Indian");
+        c2.setCurrentAddress("Mumbai, Maharashtra");
+        c2.setPermanentAddress("Lucknow, UP");
+        c2.setDob("1987-08-22");
+        c2.setGender("Female");
+        c2.setMaritalStatus("Married");
+        candidateRepository.save(c2);
 
         // Meeting State
         MeetingState ms = new MeetingState();
@@ -105,6 +90,6 @@ public class DataInitializer implements CommandLineRunner {
         ms.setVoteOpen(false);
         meetingStateRepository.save(ms);
 
-        System.out.println("Data initialization complete.");
+        System.out.println("Data initialization complete - added users and candidates.");
     }
 }
