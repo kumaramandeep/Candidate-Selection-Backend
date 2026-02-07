@@ -15,13 +15,15 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        
-        // Allow React frontend
-        config.setAllowedOriginPatterns(Arrays.asList("http://localhost:5173", "http://localhost:3000"));
+
+        // Allow React frontend (localhost + production)
+        String allowedOrigins = System.getenv().getOrDefault("CORS_ALLOWED_ORIGINS",
+                "http://localhost:5173,http://localhost:3000,https://candidate-selection-system-react.vercel.app");
+        config.setAllowedOriginPatterns(Arrays.asList(allowedOrigins.split(",")));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowCredentials(true);
-        
+
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
