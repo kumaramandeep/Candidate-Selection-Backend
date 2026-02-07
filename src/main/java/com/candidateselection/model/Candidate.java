@@ -18,7 +18,7 @@ public class Candidate {
     private String latestQualification;
     private String lastCompany;
     private Integer totalExperienceYears;
-    
+
     // Additional Personal Info
     private String phone;
     private String email;
@@ -46,7 +46,7 @@ public class Candidate {
     public static class Qualification {
         private String degree;
         private String institution;
-        private String year;
+        private String graduationYear;
         private String grade;
     }
 
@@ -64,6 +64,6 @@ public class Candidate {
     public static class Certification {
         private String name;
         private String issuer;
-        private String year;
+        private String certificationYear;
     }
 }
