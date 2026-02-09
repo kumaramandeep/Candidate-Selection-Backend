@@ -27,6 +27,8 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Initializing data...");
 
+        // ========== USERS ==========
+
         // Admin
         User admin = new User();
         admin.setUsername("admin");
@@ -35,7 +37,7 @@ public class DataInitializer implements CommandLineRunner {
         admin.setFullName("Aman");
         userRepository.save(admin);
 
-        // Member 1
+        // Members
         User member1 = new User();
         member1.setUsername("member1");
         member1.setPassword(passwordEncoder.encode("deepak"));
@@ -43,7 +45,6 @@ public class DataInitializer implements CommandLineRunner {
         member1.setFullName("Deepak Sharma");
         userRepository.save(member1);
 
-        // Member 2
         User member2 = new User();
         member2.setUsername("member2");
         member2.setPassword(passwordEncoder.encode("ranjit"));
@@ -51,7 +52,6 @@ public class DataInitializer implements CommandLineRunner {
         member2.setFullName("Ranjit Singh");
         userRepository.save(member2);
 
-        // Member 3
         User member3 = new User();
         member3.setUsername("member3");
         member3.setPassword(passwordEncoder.encode("rahul"));
@@ -59,47 +59,83 @@ public class DataInitializer implements CommandLineRunner {
         member3.setFullName("Rahul Uttam");
         userRepository.save(member3);
 
-        // Candidates
-        Candidate c1 = new Candidate();
-        c1.setFullName("Amit Kumar");
-        c1.setPhotoPath("/assets/img/placeholder.svg");
-        c1.setExpertise("coding");
-        c1.setLatestQualification("M.Tech (Computer Science)");
-        c1.setLastCompany("TechNova Pvt Ltd");
-        c1.setTotalExperienceYears(7);
-        c1.setPhone("+91-90000-00001");
-        c1.setEmail("amit.kumar@example.com");
-        c1.setNationality("Indian");
-        c1.setCurrentAddress("Bengaluru, Karnataka");
-        c1.setPermanentAddress("Patna, Bihar");
-        c1.setDob("1990-05-15");
-        c1.setGender("Male");
-        c1.setMaritalStatus("Single");
+        // ========== CANDIDATES - MET BRANCH ==========
+
+        Candidate c1 = createCandidate(
+                "31058", "MET", 1, "WG CDR", "Vikram Sharma",
+                "35 WG", "MET", "01 SEP 2025", "30 JUN 2043", "CAT A");
         candidateRepository.save(c1);
 
-        Candidate c2 = new Candidate();
-        c2.setFullName("Sneha Gupta");
-        c2.setPhotoPath("/assets/img/placeholder.svg");
-        c2.setExpertise("project_management");
-        c2.setLatestQualification("MBA (IT Management)");
-        c2.setLastCompany("InnoSystems Inc.");
-        c2.setTotalExperienceYears(10);
-        c2.setPhone("+91-90000-00002");
-        c2.setEmail("sneha.gupta@example.com");
-        c2.setNationality("Indian");
-        c2.setCurrentAddress("Mumbai, Maharashtra");
-        c2.setPermanentAddress("Lucknow, UP");
-        c2.setDob("1987-08-22");
-        c2.setGender("Female");
-        c2.setMaritalStatus("Married");
+        Candidate c2 = createCandidate(
+                "41000", "MET", 1, "WG CDR", "Ranjit Singh",
+                "12 WG", "MET", "15 MAR 2024", "28 FEB 2042", "CAT A");
         candidateRepository.save(c2);
 
-        // Meeting State
+        Candidate c3 = createCandidate(
+                "51234", "MET", 2, "SQN LDR", "Amit Kumar",
+                "22 WG", "MET", "20 JUL 2023", "15 DEC 2045", "CAT B");
+        candidateRepository.save(c3);
+
+        Candidate c4 = createCandidate(
+                "61089", "MET", 2, "GP CAPT", "Priya Sharma",
+                "Air HQ", "MET", "10 JAN 2022", "31 MAR 2040", "CAT A");
+        candidateRepository.save(c4);
+
+        // ========== CANDIDATES - FLYING BRANCH ==========
+
+        Candidate c5 = createCandidate(
+                "21058", "FLYING", 1, "WG CDR", "Suresh Menon",
+                "7 SQN", "PILOT", "05 APR 2024", "20 SEP 2044", "CAT A");
+        candidateRepository.save(c5);
+
+        Candidate c6 = createCandidate(
+                "32000", "FLYING", 1, "SQN LDR", "Kavita Rao",
+                "17 SQN", "NAV", "12 NOV 2023", "18 JUL 2046", "CAT B");
+        candidateRepository.save(c6);
+
+        Candidate c7 = createCandidate(
+                "43567", "FLYING", 3, "WG CDR", "Rahul Nair",
+                "45 SQN", "PILOT", "08 FEB 2025", "25 DEC 2041", "CAT A");
+        candidateRepository.save(c7);
+
+        // ========== CANDIDATES - ADMIN BRANCH ==========
+
+        Candidate c8 = createCandidate(
+                "52345", "ADMIN", 1, "SQN LDR", "Deepa Verma",
+                "Air HQ", "ACCTS", "01 JUN 2024", "30 APR 2048", "CAT A");
+        candidateRepository.save(c8);
+
+        Candidate c9 = createCandidate(
+                "63456", "ADMIN", 2, "WG CDR", "Mohan Das",
+                "MC Pune", "ADMIN", "15 AUG 2023", "14 AUG 2042", "CAT B");
+        candidateRepository.save(c9);
+
+        // ========== MEETING STATE ==========
         MeetingState ms = new MeetingState();
         ms.setCurrentCandidateId(c1.getId());
         ms.setVoteOpen(false);
         meetingStateRepository.save(ms);
 
-        System.out.println("Data initialization complete - added users and candidates.");
+        System.out.println("Data initialization complete - added 4 users and 9 candidates.");
+    }
+
+    private Candidate createCandidate(
+            String employeeId, String branch, Integer timer, String rank, String fullName,
+            String unit, String appt, String dop, String dor, String category) {
+        Candidate c = new Candidate();
+        c.setEmployeeId(employeeId);
+        c.setBranch(branch);
+        c.setTimer(timer);
+        c.setRank(rank);
+        c.setFullName(fullName);
+        c.setUnit(unit);
+        c.setAppt(appt);
+        c.setDop(dop);
+        c.setDor(dor);
+        c.setCategory(category);
+        c.setPhotoPath("/assets/img/placeholder.svg");
+        c.setPhoto2Path("/assets/img/placeholder.svg");
+        c.setReviewed(false);
+        return c;
     }
 }

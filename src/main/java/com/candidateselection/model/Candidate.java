@@ -12,14 +12,38 @@ public class Candidate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Primary Identifier
+    private String employeeId; // Service Number (SERNO)
+
+    // Branch & Timer
+    private String branch; // MET, FLYING, ADMIN, etc.
+    private Integer timer; // 1-5 (which timer bucket)
+
+    // Military Info
+    private String rank; // WG CDR, SQN LDR, GP CAPT, etc.
     private String fullName;
-    private String photoPath;
+    private String unit; // Unit assignment
+    private String appt; // Appointment
+    private String dop; // Date of Promotion
+    private String dor; // Date of Retirement
+    private String category; // CAT A, CAT B, etc.
+    private String decorations;
+    private Integer relyingHrs;
+
+    // Photos
+    private String photoPath; // Portrait
+    private String photo2Path; // Full body
+
+    // Review Status
+    private Boolean reviewed = false;
+
+    // Legacy fields (keeping for compatibility)
     private String expertise;
     private String latestQualification;
     private String lastCompany;
     private Integer totalExperienceYears;
 
-    // Additional Personal Info
+    // Personal Info
     private String phone;
     private String email;
     private String nationality;

@@ -7,11 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/candidates")
@@ -21,7 +18,12 @@ public class CandidateController {
     private CandidateService candidateService;
 
     @GetMapping
-    public List<Candidate> getAllCandidates() {
+    public List<Candidate> getAllCandidates(
+            @RequestParam(required = false) String branch,
+            @RequestParam(required = false) List<Integer> timers) {
+        if (branch != null && !branch.isEmpty()) {
+            return candidateService.getByBranchAndTimers(branch, timers);
+        }
         return candidateService.getAllCandidates();
     }
 
@@ -36,13 +38,40 @@ public class CandidateController {
     public Candidate createCandidate(@RequestBody Candidate candidate) {
         return candidateService.createCandidate(candidate);
     }
-    
-    // Helper to upload photo (simplified for dev)
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Candidate> updateCandidate(@PathVariable Long id, @RequestBody Candidate candidate) {
+        return candidateService.getCandidate(id)
+                .map(existing -> {
+                    candidate.setId(id);
+                    return ResponseEntity.ok(candidateService.saveCandidate(candidate));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Get all branches
+    @GetMapping("/branches")
+    public List<String> getAllBranches() {
+        return candidateService.getAllBranches();
+    }
+
+    // Get statistics (branch-wise reviewed counts)
+    @GetMapping("/statistics")
+    public Map<String, Map<String, Long>> getStatistics() {
+        return candidateService.getStatistics();
+    }
+
+    // Mark candidate as reviewed
+    @PostMapping("/{id}/reviewed")
+    public ResponseEntity<Void> markAsReviewed(@PathVariable Long id) {
+        candidateService.markAsReviewed(id);
+        return ResponseEntity.ok().build();
+    }
+
+    // Photo upload (simplified for dev)
     @PostMapping("/{id}/photo")
     public ResponseEntity<String> uploadPhoto(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
         try {
-            // In a real app, save to S3 or dedicated storage
-            // For now, just return a path
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             return ResponseEntity.ok("/uploads/" + fileName);
         } catch (Exception e) {
