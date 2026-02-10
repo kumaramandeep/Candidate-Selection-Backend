@@ -29,9 +29,9 @@ public class MeetingService {
     public MeetingState setCurrentCandidate(Long candidateId) {
         MeetingState state = getState();
         state.setCurrentCandidateId(candidateId);
-        state.setVoteOpen(false); // Close voting when changing candidate
+        // DO NOT auto-close voting - let admin control voting state explicitly
         MeetingState savedState = meetingStateRepository.save(state);
-        
+
         webSocketService.notifyMeetingUpdate(savedState);
         return savedState;
     }
@@ -41,7 +41,7 @@ public class MeetingService {
         MeetingState state = getState();
         state.setVoteOpen(isOpen);
         MeetingState savedState = meetingStateRepository.save(state);
-        
+
         webSocketService.notifyMeetingUpdate(savedState);
         return savedState;
     }
